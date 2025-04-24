@@ -22,4 +22,11 @@ This algorithm is designed to improve classification performance on imbalanced d
     - Majority-class samples with low contribution to classification boundary are selectively removed, 
       improving class balance without discarding informative samples.
   ## Visualized results
-  
+<img src="https://github.com/user-attachments/assets/da4e3683-903e-4209-b8ec-96dbe6024f30" width="500"/>
+<img src="https://github.com/user-attachments/assets/012fd990-650a-4457-a99c-eba19608e115" width="500"/>
+
+## How to Use?
+The implementation of the NAUS algorithm and accompanying training procedures is publicly available in this [repository](NAUS_code).
+Comprehensive usage examples and step-by-step instructions are provided for the benchmark datasets us_crime and sat_image, located in the [repository](NAUS_tutorials).
+These examples demonstrate how to apply the algorithm from data preprocessing to model training and evaluation.
+
