@@ -1,0 +1,39 @@
+package:
+  name: Naus_code
+  version: "0.1"
+
+source:
+  git_url: https://github.com/ZhibekZhetpisbay/NAUS_algorithm
+  git_rev: main  
+
+build:
+  noarch: python
+  script: python -m pip install . --no-deps --ignore-installed -vv
+
+requirements:
+  build:
+    - python >=3.7
+    - pip
+    - setuptools
+
+  run:
+    - python >=3.7
+    - numpy
+    - pandas
+    - matplotlib
+    - scikit-learn
+    - scipy
+    - umap-learn
+    - xgboost
+    - lightgbm
+    - torch
+    - imbalanced-learn
+
+about:
+  home: https://github.com/ZhibekZhetpisbay/NAUS_algorithm
+  summary: "Python package implementing NAUS (Noise-Aware Undersampling Strategy) and model training utilities."
+  author: Z. Buribayev, A. Yerkos, Z. Zhetpisbay
+
+extra:
+  recipe-maintainers:
+    - ZhibekZhetpisbay
