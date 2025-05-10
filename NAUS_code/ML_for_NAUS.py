@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[8]:
-
-
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import StratifiedKFold, train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, recall_score
+import lightgbm as lgb
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, TensorDataset
+import random
+from importlib.resources import path
+
 #Function for dividing data in a given class ratio
 #Input data: data - dataset, number - number 0f elements of each class in test data, i - random state
 #Output data: Train feature values, test feature values, train target values, test target values
@@ -29,13 +36,6 @@ def split_test(data,number,i):
     print(y_test.value_counts())
     return X_train,X_test,y_train,y_test
 
-
-# In[9]:
-
-
-from sklearn.model_selection import StratifiedKFold, train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, recall_score
 #Function for training Random Forest algorithm data in pre- and post-balancing modes using the undersampling method
 #Input data: data - dataset, test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, mode - training mode 'original' for before undersampling and 'undersampled' for after, n_splits - number of splits for StratifiedKFold  
 def rndf_weights(data, test_min, rnd1, rnd2,mode, n_splits):
@@ -88,11 +88,6 @@ def rndf_weights(data, test_min, rnd1, rnd2,mode, n_splits):
     print(f"\nTest Data Evaluation - Accuracy: {test_accuracy:.4f}, AUC: {test_auc_score:.4f}, Precision: {test_precision:.4f}, Recall: {test_recall:.4f}")
     return test_accuracy,test_auc_score,test_precision,test_recall
 
-
-# In[10]:
-
-
-import lightgbm as lgb
 #Function for training Light GBM algorithm data in pre- and post-balancing modes using the undersampling method
 #Input data: data - dataset, test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, mode - training mode 'original' for before undersampling and 'undersampled' for after, n_splits - number of splits for StratifiedKFold  
 def lgbm_weights(data,test_min, rnd1=42,rnd2=42,mode = 'original', n_splits=2):
@@ -147,15 +142,6 @@ def lgbm_weights(data,test_min, rnd1=42,rnd2=42,mode = 'original', n_splits=2):
     print(f"\nTest Data Evaluation - Accuracy: {test_accuracy:.4f}, AUC: {test_auc_score:.4f}, Precision: {test_precision:.4f}, Recall: {test_recall:.4f}")
 
 
-# In[11]:
-
-
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
-import random
-from importlib.resources import path
 #Function for training MLP algorithm data in pre- and post-balancing modes using the undersampling method
 #Input data: data - dataset, test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, epochs - number of epochs for model learning, batch_size - samples per training step, lr - learning rate 
 def set_random_seed(seed):
@@ -243,10 +229,6 @@ def mlp_weight(data, test_min, rnd1=42, rnd2=42, epochs=50, batch_size=32, lr=0.
     print(f"\nTest Data Evaluation - Accuracy: {test_accuracy:.4f}, AUC: {test_auc_score:.4f}, Precision: {test_precision:.4f}, Recall: {test_recall:.4f}")
     return test_accuracy, test_auc_score, test_precision, test_recall
 
-
-# In[12]:
-
-
 #Function for training Light GBM algorithm data after oversampling method
 #Input data: overs_data - oversampled dataset, n - number of new samples,test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split
 def lgbm_overs1(overs_data,n,test_min,rnd1=42,rnd2=42):
@@ -296,10 +278,6 @@ def lgbm_overs1(overs_data,n,test_min,rnd1=42,rnd2=42):
     print(f"\nTest Data Evaluation - Accuracy: {test_accuracy:.4f}, AUC: {test_auc_score:.4f}, Precision: {test_precision:.4f}, Recall: {test_recall:.4f}")
     return test_accuracy,test_auc_score,test_precision,test_recall
 
-
-# In[13]:
-
-
 #Function for training Random Forest algorithm data after oversampling method
 #Input data: overs_data - oversampled dataset, n - number of new samples,test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split
 def rndf_overs1(overs_data,n,test_min,rnd1=42,rnd2=42):
@@ -347,10 +325,6 @@ def rndf_overs1(overs_data,n,test_min,rnd1=42,rnd2=42):
     test_recall = recall_score(y_test1, test_pred_binary)
     print(f"\nTest Data Evaluation - Accuracy: {test_accuracy:.4f}, AUC: {test_auc_score:.4f}, Precision: {test_precision:.4f}, Recall: {test_recall:.4f}")
     return test_accuracy,test_auc_score,test_precision,test_recall
-
-
-# In[14]:
-
 
 #Function for training MLP algorithm data after oversampling method
 #Input data: overs_data - oversampled dataset, n - number of new samples,test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, epochs - number of epochs for model learning, batch_size - samples per training step, lr - learning rate 
