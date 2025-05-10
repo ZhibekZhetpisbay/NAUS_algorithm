@@ -1,1 +1,1 @@
-from .core import greet
+from .NAUS_code import greet
