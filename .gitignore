@@ -1,0 +1,69 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb~  # временные файлы Jupyter
+
+# Notebook output
+*.out
+*.log
+
+# Package metadata
+*.egg-info/
+dist/
+build/
+*.egg
+*.whl
+pip-wheel-metadata/
+*.manifest
+
+# Testing, coverage and cache
+.tox/
+.nox/
+.pytest_cache/
+.coverage
+.cache
+*.cover
+nosetests.xml
+coverage.xml
+htmlcov/
+
+# VSCode / PyCharm / IDEs
+.vscode/
+.idea/
+
+# Data, results, figures (optional — зависит от проекта)
+*.csv
+*.tsv
+*.xls
+*.xlsx
+*.pkl
+*.h5
+*.json
+*.npz
+*.npy
+*.joblib
+*.sav
+*.png
+*.jpg
+*.jpeg
+*.svg
+
+# GitHub + macOS + OS specific
+.DS_Store
+Thumbs.db
