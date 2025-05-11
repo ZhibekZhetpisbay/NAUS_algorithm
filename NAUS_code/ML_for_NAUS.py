@@ -15,10 +15,11 @@ from importlib.resources import path
 
 class ModelTraining:
     def __init__(self):
+        pass
     #Function for dividing data in a given class ratio
     #Input data: data - dataset, number - number 0f elements of each class in test data, i - random state
     #Output data: Train feature values, test feature values, train target values, test target values
-    def split_test(data,number,i):
+    def split_test(self, data, number, i):
         class_0 = data[data.iloc[:,-1] == 0]
         class_1 = data[data.iloc[:,-1] == 1]
         test_size_per_class = number
@@ -40,7 +41,7 @@ class ModelTraining:
     
     #Function for training Random Forest algorithm data in pre- and post-balancing modes using the undersampling method
     #Input data: data - dataset, test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, mode - training mode 'original' for before undersampling and 'undersampled' for after, n_splits - number of splits for StratifiedKFold  
-    def rndf_weights(data, test_min, rnd1, rnd2,mode, n_splits):
+    def rndf_weights(self, data, test_min, rnd1, rnd2,mode, n_splits):
         X_train_full, X_test1, y_train_full, y_test1 = split_test(data, test_min, rnd1)
         kf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=rnd2)
         fold = 1
@@ -90,7 +91,7 @@ class ModelTraining:
     
     #Function for training Light GBM algorithm data in pre- and post-balancing modes using the undersampling method
     #Input data: data - dataset, test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, mode - training mode 'original' for before undersampling and 'undersampled' for after, n_splits - number of splits for StratifiedKFold  
-    def lgbm_weights(data,test_min, rnd1=42,rnd2=42,mode = 'original', n_splits=2):
+    def lgbm_weights(self, data,test_min, rnd1=42,rnd2=42,mode = 'original', n_splits=2):
         X_train_full, X_test1, y_train_full, y_test1 = split_test(data, test_min, rnd1)
         kf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=rnd2)
         fold = 1
@@ -140,18 +141,18 @@ class ModelTraining:
         test_precision = precision_score(y_test1, test_pred_binary)
         test_recall = recall_score(y_test1, test_pred_binary)
         print(f"\nTest Data Evaluation - Accuracy: {test_accuracy:.4f}, AUC: {test_auc_score:.4f}, Precision: {test_precision:.4f}, Recall: {test_recall:.4f}")
-    
+        return test_accuracy, test_auc_score, test_precision, test_recall
     
     #Function for training MLP algorithm data in pre- and post-balancing modes using the undersampling method
     #Input data: data - dataset, test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, epochs - number of epochs for model learning, batch_size - samples per training step, lr - learning rate 
-    def set_random_seed(seed):
+    def set_random_seed(self, seed):
         torch.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
         np.random.seed(seed)
         random.seed(seed)
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
-    def mlp_weight(data, test_min, rnd1=42, rnd2=42, epochs=50, batch_size=32, lr=0.001):
+    def mlp_weight(self, data, test_min, rnd1=42, rnd2=42, epochs=50, batch_size=32, lr=0.001):
         X_train_full, X_test1, y_train_full, y_test1 = split_test(data, test_min, rnd1)
         kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=rnd2)
         fold = 1
@@ -215,7 +216,7 @@ class ModelTraining:
     
     #Function for training Light GBM algorithm data after oversampling method
     #Input data: overs_data - oversampled dataset, n - number of new samples,test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split
-    def lgbm_overs1(overs_data,n,test_min,rnd1=42,rnd2=42):
+    def lgbm_overs1(self, overs_data,n,test_min,rnd1=42,rnd2=42):
         X_train_full, X_test1, y_train_full, y_test1 = split_test(overs_data.iloc[:-n,:], test_min, rnd1)
         X_train_full1 = pd.concat([X_train_full, overs_data.iloc[-n:, :-1]], ignore_index=True)
         y_train_full1 = pd.concat([y_train_full, overs_data.iloc[-n:, -1]], ignore_index=True)
@@ -265,7 +266,7 @@ class ModelTraining:
     
     #Function for training Random Forest algorithm data after oversampling method
     #Input data: overs_data - oversampled dataset, n - number of new samples,test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split
-    def rndf_overs1(overs_data,n,test_min,rnd1=42,rnd2=42):
+    def rndf_overs1(self, overs_data,n,test_min,rnd1=42,rnd2=42):
         X_train_full, X_test1, y_train_full, y_test1 = split_test(overs_data.iloc[:-n,:], test_min, rnd1)
         X_train_full1 = pd.concat([X_train_full, overs_data.iloc[-n:, :-1]], ignore_index=True)
         y_train_full1 = pd.concat([y_train_full, overs_data.iloc[-n:, -1]], ignore_index=True)
@@ -311,7 +312,7 @@ class ModelTraining:
     
     #Function for training MLP algorithm data after oversampling method
     #Input data: overs_data - oversampled dataset, n - number of new samples,test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, epochs - number of epochs for model learning, batch_size - samples per training step, lr - learning rate 
-    def mlp_overs1(overs_data, n, test_min, rnd1=42, rnd2=42, epochs=50, batch_size=32, lr=0.001):
+    def mlp_overs1(self, overs_data, n, test_min, rnd1=42, rnd2=42, epochs=50, batch_size=32, lr=0.001):
         X_train_full, X_test1, y_train_full, y_test1 = split_test(overs_data.iloc[:-n, :], test_min, rnd1)
         X_train_full1 = pd.concat([X_train_full, overs_data.iloc[-n:, :-1]], ignore_index=True)
         y_train_full1 = pd.concat([y_train_full, overs_data.iloc[-n:, -1]], ignore_index=True)
