@@ -29,4 +29,20 @@ This algorithm is designed to improve classification performance on imbalanced d
 The implementation of the NAUS algorithm and accompanying training procedures is publicly available in this [repository](NAUS_code).
 Comprehensive usage examples and step-by-step instructions are provided for the benchmark datasets us_crime and sat_image, located in the [repository](NAUS_tutorials).
 These examples demonstrate how to apply the algorithm from data preprocessing to model training and evaluation.
-
+> ⚠️ **Before using the package**, please make sure to update all required libraries to their latest stable versions to avoid compatibility issues.  
+>  
+> ✅ Below is an example of tested library versions known to work properly with this package:
+>
+> - `pip` 23.2.1  
+> - `imbalanced-learn` 0.12.3  
+> - `lightgbm` 4.5.0  
+> - `matplotlib` 3.9.2  
+> - `numpy` 1.26.4  
+> - `pandas` 2.2.3  
+> - `scikit-learn` 1.5.1  
+> - `scipy` 1.11.1  
+> - `torch` 2.5.1  
+> - `umap-learn` 0.5.6  
+> - `xgboost` 2.1.4  
+> - `setuptools` 75.3.0  
+> - `packaging` 25.0  
