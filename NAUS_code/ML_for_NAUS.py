@@ -157,7 +157,7 @@ class ModelTraining:
         kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=rnd2)
         fold = 1
         evals = []
-        set_random_seed(42)
+        self.set_random_seed(42)
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         input_dim = X_train_full.shape[1]
         for train_index, val_index in kf.split(X_train_full, y_train_full):
