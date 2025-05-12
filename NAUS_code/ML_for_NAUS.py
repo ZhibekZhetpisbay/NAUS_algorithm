@@ -42,7 +42,7 @@ class ModelTraining:
     #Function for training Random Forest algorithm data in pre- and post-balancing modes using the undersampling method
     #Input data: data - dataset, test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, mode - training mode 'original' for before undersampling and 'undersampled' for after, n_splits - number of splits for StratifiedKFold  
     def rndf_weights(self, data, test_min, rnd1, rnd2,mode, n_splits):
-        X_train_full, X_test1, y_train_full, y_test1 = split_test(data, test_min, rnd1)
+        X_train_full, X_test1, y_train_full, y_test1 = self.split_test(data, test_min, rnd1)
         kf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=rnd2)
         fold = 1
         evals = []
@@ -92,7 +92,7 @@ class ModelTraining:
     #Function for training Light GBM algorithm data in pre- and post-balancing modes using the undersampling method
     #Input data: data - dataset, test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, mode - training mode 'original' for before undersampling and 'undersampled' for after, n_splits - number of splits for StratifiedKFold  
     def lgbm_weights(self, data,test_min, rnd1=42,rnd2=42,mode = 'original', n_splits=2):
-        X_train_full, X_test1, y_train_full, y_test1 = split_test(data, test_min, rnd1)
+        X_train_full, X_test1, y_train_full, y_test1 = self.split_test(data, test_min, rnd1)
         kf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=rnd2)
         fold = 1
         evals = []
@@ -153,7 +153,7 @@ class ModelTraining:
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
     def mlp_weight(self, data, test_min, rnd1=42, rnd2=42, epochs=50, batch_size=32, lr=0.001):
-        X_train_full, X_test1, y_train_full, y_test1 = split_test(data, test_min, rnd1)
+        X_train_full, X_test1, y_train_full, y_test1 = self.split_test(data, test_min, rnd1)
         kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=rnd2)
         fold = 1
         evals = []
@@ -217,7 +217,7 @@ class ModelTraining:
     #Function for training Light GBM algorithm data after oversampling method
     #Input data: overs_data - oversampled dataset, n - number of new samples,test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split
     def lgbm_overs1(self, overs_data,n,test_min,rnd1=42,rnd2=42):
-        X_train_full, X_test1, y_train_full, y_test1 = split_test(overs_data.iloc[:-n,:], test_min, rnd1)
+        X_train_full, X_test1, y_train_full, y_test1 = self.split_test(overs_data.iloc[:-n,:], test_min, rnd1)
         X_train_full1 = pd.concat([X_train_full, overs_data.iloc[-n:, :-1]], ignore_index=True)
         y_train_full1 = pd.concat([y_train_full, overs_data.iloc[-n:, -1]], ignore_index=True)
         kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=rnd2)
@@ -267,7 +267,7 @@ class ModelTraining:
     #Function for training Random Forest algorithm data after oversampling method
     #Input data: overs_data - oversampled dataset, n - number of new samples,test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split
     def rndf_overs1(self, overs_data,n,test_min,rnd1=42,rnd2=42):
-        X_train_full, X_test1, y_train_full, y_test1 = split_test(overs_data.iloc[:-n,:], test_min, rnd1)
+        X_train_full, X_test1, y_train_full, y_test1 = self.split_test(overs_data.iloc[:-n,:], test_min, rnd1)
         X_train_full1 = pd.concat([X_train_full, overs_data.iloc[-n:, :-1]], ignore_index=True)
         y_train_full1 = pd.concat([y_train_full, overs_data.iloc[-n:, -1]], ignore_index=True)
         kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=rnd2)
@@ -313,7 +313,7 @@ class ModelTraining:
     #Function for training MLP algorithm data after oversampling method
     #Input data: overs_data - oversampled dataset, n - number of new samples,test_min - number of elements of each class in test data, rnd1 - random state for test split, rnd2 - random state for validation split, epochs - number of epochs for model learning, batch_size - samples per training step, lr - learning rate 
     def mlp_overs1(self, overs_data, n, test_min, rnd1=42, rnd2=42, epochs=50, batch_size=32, lr=0.001):
-        X_train_full, X_test1, y_train_full, y_test1 = split_test(overs_data.iloc[:-n, :], test_min, rnd1)
+        X_train_full, X_test1, y_train_full, y_test1 = self.split_test(overs_data.iloc[:-n, :], test_min, rnd1)
         X_train_full1 = pd.concat([X_train_full, overs_data.iloc[-n:, :-1]], ignore_index=True)
         y_train_full1 = pd.concat([y_train_full, overs_data.iloc[-n:, -1]], ignore_index=True)
         kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=rnd2)
