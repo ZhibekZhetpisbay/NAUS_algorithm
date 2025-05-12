@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
 setup(
     name='NAUS_code',
     version='0.1',
-    packages=find_packages(),
+    packages=find_packages(include=['NAUS_code', 'NAUS_code.*']),
     author='Z. Buribayev, A. Yerkos, Z. Zhetpisbay',
     author_email='zhibekzhetpisbay@gmail.com',
     description='Package with NAUS algorithm and learning model',
