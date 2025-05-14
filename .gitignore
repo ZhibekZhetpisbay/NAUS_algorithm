@@ -17,7 +17,7 @@ venv.bak/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-*.ipynb~  # временные файлы Jupyter
+*.ipynb~  
 
 # Notebook output
 *.out
@@ -47,7 +47,7 @@ htmlcov/
 .vscode/
 .idea/
 
-# Data, results, figures (optional — зависит от проекта)
+# Data, results, figures
 *.csv
 *.tsv
 *.xls
