@@ -394,7 +394,7 @@ class DataProcessor:
             plt.scatter(
                 noise["UMAP1"],
                 noise["UMAP2"],
-                c="black",s = 20, alpha=0.6, label="Deleted data", marker="x"
+                c="black",s = 20, alpha=0.6, label="Excluded data", marker="x"
             ) 
             plt.scatter(
                 filtered_data.loc[filtered_data[self.class_col] == majority_class, "UMAP1"],
