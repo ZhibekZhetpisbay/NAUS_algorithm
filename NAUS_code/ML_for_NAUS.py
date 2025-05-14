@@ -319,7 +319,7 @@ class ModelTraining:
         kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=rnd2)
         fold = 1
         evals = []
-        set_random_seed(42)
+        self.set_random_seed(42)
         class MLP(nn.Module):
             def __init__(self, input_dim):
                 super(MLP, self).__init__()
