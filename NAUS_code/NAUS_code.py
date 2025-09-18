@@ -144,7 +144,7 @@ class DataProcessor:
 
         return potential_majority - potential_minority
 
-    def mutual_class_potential_undersample(self, gamma=1.0):
+    def mutual_class_potential_undersample(self, gamma=1.0, ratio=0.5):
         """
         Undersample the majority class using mutual class potential.
         
@@ -176,7 +176,7 @@ class DataProcessor:
         # Determine the number of samples to remove
         n_majority = len(majority_class_values)
         n_minority = len(minority_class_values)
-        n_to_remove = n_majority - 2 * n_minority  # Remove until majority is <= 2 * minority
+        n_to_remove = n_majority - int(ratio * n_minority)
         if n_to_remove > 0:
             # Get the indices of the majority class samples to remove based on potential (highest first)
             remove_indices = []
@@ -319,7 +319,7 @@ class DataProcessor:
         
         if ratio*n_majority > n_minority:
             # Apply mutual class potential undersampling
-            self.undersampled_data, delated = self.mutual_class_potential_undersample(gamma)
+            self.undersampled_data, delated = self.mutual_class_potential_undersample(gamma, ratio)
             delated_df = delated # Выбираем строки по индексам
             delated_df[self.class_col] = maj_class  # Ensure class column is included
             if self.delated is None:
