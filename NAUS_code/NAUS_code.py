@@ -70,7 +70,11 @@ class DataProcessor:
 
             if posterior_0 + posterior_1 == 0:  # Avoid division by zero
                 return 0.5
-            return posterior_1 / (posterior_0 + posterior_1)
+            if row[self.class_col] == class_0:
+                return posterior_1 / (posterior_0 + posterior_1)
+            else:
+                return posterior_0 / (posterior_0 + posterior_1)
+
 
         self.data['p_other_class'] = self.data.apply(posterior_probability, axis=1)
 
